@@ -1,0 +1,27 @@
+.card {
+  padding: 25px;
+  border-radius: 15px;
+  margin: 10px;
+  box-shadow: rgb(0 0 0 / 20%) 0px 12px 28px 0px,
+    rgb(0 0 0 / 10%) 0px 2px 4px 0px,
+    rgb(255 255 255 / 5%) 0px 0px 0px 1px inset;
+}
+
+.main {
+  min-height: 13.5vh;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.over-flow {
+  overflow-y: scroll;
+  height: 35rem;
+}
+
+.card.search-bar {
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr;
+  align-items: center;
+  gap: 5px;
+}

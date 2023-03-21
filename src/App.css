@@ -1,0 +1,62 @@
+.App {
+  text-align: left;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  font-family: "Roboto", sans-serif;
+  scrollbar-color: rebeccapurple green;
+}
+
+/* input {
+  border: 1px solid #80808047;
+  border-radius: 5px;
+  padding: 5px 0px 5px 5px;
+  margin: 1px 0px;
+  transition: 0.3s ease;
+}
+
+input:hover {
+  border: 1px solid #1a73e8;
+  border-radius: 5px;
+  padding: 5px 0px 5px 5px;
+  margin: 1px 0px;
+  transition: 0.3s ease;
+}
+*/
+/* input:focus {
+  outline: none !important;
+  border: 1px solid #1a73e8 !important;
+  border-radius: 5px;
+  padding: 5px 0px 5px 5px;
+  margin: 1px 0px;
+  transition: 0.3s ease;
+} */
+
+/* button {
+  padding: 10px;
+  margin: 15px 10px 5px 0px;
+  background: #1a73e8;
+  border: 1px solid #1a73e8;
+  color: white;
+  border-radius: 2px;
+  transition: 0.3s ease;
+}
+
+button:hover {
+  background: transparent;
+  color: #1a73e8;
+  border: 1px solid #1a73e8;
+  transition: 0.3s ease;
+} */
+
+::-webkit-scrollbar {
+  width: 1em;
+}
+
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+::-webkit-scrollbar-thumb {
+  background-image: linear-gradient(#d6dbe0, #d5d9dfe8);
+  border-radius: 2px;
+}
