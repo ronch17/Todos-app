@@ -1,9 +1,19 @@
 .App {
   text-align: left;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, 50%);
   font-family: "Roboto", sans-serif;
   scrollbar-color: rebeccapurple green;
+}
+
+@media (max-width: 768px) {
+  .App {
+    display: block;
+  }
+
+  .right-column {
+    display: none;
+  }
 }
 
 /* input {

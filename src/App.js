@@ -2,12 +2,12 @@ import "./App.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import Users from "./Users/Users";
-import SearchBar from "./SearchBar";
 import Todos from "./Todos/Todos";
 import Posts from "./Posts/Posts";
 import AddUser from "./Users/AddUser";
-import Card from "./UI/Card";
-import { Grid, Button } from "@mui/material";
+import Header from "./UI/Header";
+import Nav from "./MobileNavbar/Nav";
+import { Routes, Route, Link } from "react-router-dom";
 
 const userUrl = "https://jsonplaceholder.typicode.com/users";
 const todosUrl = "https://jsonplaceholder.typicode.com/todos";
@@ -20,6 +20,8 @@ const App = () => {
   const [search, setSearch] = useState("");
   const [showTodos, setShowTodos] = useState("");
   const [addUserSection, setAddUserSection] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [mountTodos, setMountTodos] = useState(false);
 
   const getData = async () => {
     const { data: userData } = await axios.get(userUrl);
@@ -33,10 +35,6 @@ const App = () => {
   useEffect(() => {
     getData();
   }, []);
-
-  const searchValue = (value) => {
-    setSearch(value);
-  };
 
   const clonedUser = users.slice(-1);
 
@@ -97,8 +95,6 @@ const App = () => {
     }
   };
 
-  console.log(posts);
-
   const markCompleted = (id) => {
     const updatedTodo = todos.map((todo) => {
       if (todo.id === +id) {
@@ -121,67 +117,97 @@ const App = () => {
     setUsers([...users, newUser]);
   };
 
-  const addNewUserSection = () => {
-    setAddUserSection(!addUserSection);
+  const addUserBtnVal = (value) => {
+    setAddUserSection(value);
+  };
+
+  const userNameCallback = (name) => {
+    setUserName(name);
+  };
+
+  const callbackTodos = (val) => {
+    setMountTodos(val);
   };
 
   return (
-    <div className="App">
-      <div className="left-column">
-        <Card variant="outlined">
-          <Grid
-            container
-            spacing={2}
-            height={100}
-            justifyContent="space-between"
-            direction="row"
-            alignItems="center"
-            wrap="noWrap"
-          >
-            <Grid item xl={8}>
-              <SearchBar users={users} callbackSearch={searchValue} />
-            </Grid>
-            <Grid item xl={4}>
-              <Button
-                variant="contained"
-                sx={{ minWidth: "8em" }}
-                name="addUser"
-                onClick={addNewUserSection}
-              >
-                Add User
-              </Button>
-            </Grid>
-          </Grid>
-        </Card>
-        <Users
-          users={users}
-          todos={todos}
-          searchValue={search}
-          changeUser={changeUser}
-          deleteUser={deleteUser}
-          getId={getUserId}
-        />
-      </div>
-      <div className="right-column" style={{ width: "100%" }}>
-        {addUserSection ? (
-          <AddUser
-            userObj={clonedUser}
-            addNewUser={addNewUser}
-            cancel={addNewUserSection}
-          />
-        ) : (
-          <>
-            <Todos
-              todos={todos}
-              userId={showTodos}
-              markCompleted={markCompleted}
-              addNewTodo={addNewTodo}
+    <>
+      <Header />
+
+      <Nav callbackTodos={callbackTodos} />
+
+      <div className="App">
+        <div className="left-column">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <Users
+                  users={users}
+                  todos={todos}
+                  searchValue={search}
+                  addUserBtnVal={addUserBtnVal}
+                  changeUser={changeUser}
+                  deleteUser={deleteUser}
+                  getId={getUserId}
+                  userName={userNameCallback}
+                />
+              }
             />
-            <Posts posts={posts} userId={showTodos} addNewPost={addNewPost} />
-          </>
-        )}
+            <Route
+              path="/todos"
+              element={
+                <Todos
+                  userName={users.name}
+                  todos={todos}
+                  userId={showTodos}
+                  markCompleted={markCompleted}
+                  addNewTodo={addNewTodo}
+                  currentUserName={userName}
+                />
+              }
+            />
+            <Route
+              path="/posts"
+              element={
+                <Posts
+                  posts={posts}
+                  userId={showTodos}
+                  addNewPost={addNewPost}
+                  currentUserName={userName}
+                />
+              }
+            />
+          </Routes>
+        </div>
+
+        <div className="right-column" style={{ width: "100%" }}>
+          {addUserSection ? (
+            <AddUser
+              userObj={clonedUser}
+              addNewUser={addNewUser}
+              cancelVal={addUserBtnVal}
+            />
+          ) : (
+            <>
+              <Todos
+                userName={users.name}
+                todos={todos}
+                userId={showTodos}
+                markCompleted={markCompleted}
+                addNewTodo={addNewTodo}
+                currentUserName={userName}
+              />
+              <Posts
+                posts={posts}
+                userId={showTodos}
+                addNewPost={addNewPost}
+                currentUserName={userName}
+              />
+            </>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

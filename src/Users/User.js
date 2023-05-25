@@ -1,5 +1,14 @@
-import { Button, FormLabel, Input } from "@mui/material";
+import {
+  Button,
+  ButtonGroup,
+  FormLabel,
+  Input,
+  Tooltip,
+  Typography,
+} from "@mui/material";
 import { useState } from "react";
+import AssignmentTurnedInIcon from "@mui/icons-material/AssignmentTurnedIn";
+import EventBusyIcon from "@mui/icons-material/EventBusy";
 
 const User = ({
   id,
@@ -12,6 +21,8 @@ const User = ({
   getId,
   handleUserInActive,
   userInActive,
+  users,
+  userName,
 }) => {
   const [isShown, setIsShown] = useState(false);
   const [nameValue, setNameValue] = useState(name);
@@ -24,6 +35,7 @@ const User = ({
   const handleName = (e) => {
     setNameValue(e.target.value);
   };
+
   const handleEmail = (e) => {
     setEmailValue(e.target.value);
   };
@@ -54,6 +66,14 @@ const User = ({
     getId(id);
     userInActive !== id && handleUserInActive(id);
     console.log(id);
+
+    const getUserName = users.filter((user) => {
+      return user.id == id;
+    });
+
+    const [theUserName] = getUserName;
+    console.log(theUserName.name);
+    userName(theUserName.name);
   };
 
   return (
@@ -63,12 +83,23 @@ const User = ({
         marginBottom: "5px",
         borderRadius: "5px",
         padding: "0px 0px 15px 15px",
-        background:
-          id === userInActive ? "rgba(255, 166, 0, 0.336)" : "transparent",
+        background: id === userInActive ? "#D0E2FF" : "transparent",
         transition: "1s ease",
       }}
+      onClick={handleUser}
     >
       <form onSubmit={handleSubmit}>
+        {isDone ? (
+          <Tooltip title="All tasks are done">
+            <AssignmentTurnedInIcon
+              style={{ paddingTop: "1rem", color: "#6fb66f" }}
+            />
+          </Tooltip>
+        ) : (
+          <Tooltip title="Tasks not done yet">
+            <EventBusyIcon style={{ paddingTop: "1rem", color: "#9f2424" }} />
+          </Tooltip>
+        )}
         <h5 id={id} onClick={handleUser}>
           ID: {id}
         </h5>
@@ -83,59 +114,50 @@ const User = ({
           style={{ background: emailValid ? "red" : "transparent" }}
         />
         <br />
-        <Button
+        <ButtonGroup
           size="small"
-          style={{
-            margin: "5px 5px 0px 0px",
-            background: "#0000001a",
-            color: "#383838",
-          }}
-          onMouseEnter={() => setIsShown(true)}
-        >
-          Other Data
-        </Button>
-        {isShown && (
-          <div>
-            <FormLabel onClick={() => setIsShown(false)}>Street: </FormLabel>
-            <Input
-              value={streetValue}
-              placeholder={otherData.street}
-              onChange={handleStreet}
-            />
-            <br /> <FormLabel>City: </FormLabel>
-            <Input
-              value={cityValue}
-              placeholder={otherData.city}
-              onChange={handleCity}
-            />
-            <br /> <FormLabel>Zip Code: </FormLabel>
-            <Input
-              type="number"
-              value={zipCodeValue}
-              placeholder={otherData.zipcode}
-              onChange={handleZipCode}
-            />
-            <br />
-          </div>
-        )}
-        <Button
           variant="contained"
-          size="small"
-          type="submit"
-          value="Submit"
-          style={{ margin: "10px 5px 5px 0px" }}
+          aria-label="outlined primary button group"
+          style={{ marginTop: "1rem" }}
         >
-          Update
-        </Button>
-        <Button
-          variant="outlined"
-          size="small"
-          value={id}
-          onClick={(e) => deleteUser(e.target.value)}
-          style={{ margin: "10px 5px 5px 0px" }}
-        >
-          Delete
-        </Button>
+          <Button variant="outlined" onMouseEnter={() => setIsShown(true)}>
+            Other Data
+          </Button>
+          {isShown && (
+            <div style={{ padding: "1rem" }}>
+              <FormLabel onClick={() => setIsShown(false)}>Street: </FormLabel>
+              <Input
+                value={streetValue}
+                placeholder={otherData.street}
+                onChange={handleStreet}
+              />
+              <br /> <FormLabel>City: </FormLabel>
+              <Input
+                value={cityValue}
+                placeholder={otherData.city}
+                onChange={handleCity}
+              />
+              <br /> <FormLabel>Zip Code: </FormLabel>
+              <Input
+                type="number"
+                value={zipCodeValue}
+                placeholder={otherData.zipcode}
+                onChange={handleZipCode}
+              />
+              <br />
+            </div>
+          )}
+          <Button variant="contained" type="submit" value="Submit">
+            Update
+          </Button>
+          <Button
+            variant="outlined"
+            value={id}
+            onClick={(e) => deleteUser(e.target.value)}
+          >
+            Delete
+          </Button>
+        </ButtonGroup>
       </form>
     </div>
   );

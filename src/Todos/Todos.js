@@ -2,9 +2,16 @@ import { useState } from "react";
 import Todo from "./Todo";
 import NewTodo from "./NewTodo";
 import Card from "../UI/Card";
-import { Button } from "@mui/material";
+import { Button, Grid, Stack, Typography } from "@mui/material";
+import AssignmentIcon from "@mui/icons-material/Assignment";
 
-const Todos = ({ todos, userId, markCompleted, addNewTodo }) => {
+const Todos = ({
+  todos,
+  userId,
+  markCompleted,
+  addNewTodo,
+  currentUserName,
+}) => {
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
 
   const showAddTodo = (submitted) => {
@@ -14,19 +21,6 @@ const Todos = ({ todos, userId, markCompleted, addNewTodo }) => {
 
   return (
     <div>
-      <Card
-        className="main"
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          height: "3em",
-        }}
-      >
-        <h3>Todos - User {userId}</h3>
-        <Button color="success" variant="contained" onClick={showAddTodo}>
-          New Todo
-        </Button>
-      </Card>
       {isTaskModalOpen ? (
         <NewTodo
           todos={todos}
@@ -36,6 +30,35 @@ const Todos = ({ todos, userId, markCompleted, addNewTodo }) => {
         />
       ) : (
         <Card className="over-flow">
+          <Grid
+            container
+            spacing={2}
+            justifyContent="space-between"
+            direction="row"
+            alignItems="center"
+            wrap="noWrap"
+          >
+            <Grid item xl={8}>
+              <Stack
+                direction="row"
+                spacing={1}
+                style={{ paddingBottom: "1rem" }}
+              >
+                <AssignmentIcon
+                  style={{ fontSize: "1.8rem", color: "#c5c5c5" }}
+                />
+                <Typography variant="h5">Todos</Typography>
+              </Stack>
+
+              <h3>{currentUserName}</h3>
+            </Grid>
+            <Grid item xl={4}>
+              <Button color="success" variant="contained" onClick={showAddTodo}>
+                New Todo
+              </Button>
+            </Grid>
+          </Grid>
+
           {todos
             .filter((todo) => {
               return todo.userId === +userId;

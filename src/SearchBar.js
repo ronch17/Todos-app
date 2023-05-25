@@ -28,7 +28,7 @@ const SearchBar = ({ users, callbackSearch }) => {
           variant="standard"
           value={search}
           onChange={handleSearch}
-          sx={{ width: 500 }}
+          sx={{ width: "100%" }}
         />
       </Box>
       {/* <label>Search </label>

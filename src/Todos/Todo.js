@@ -14,8 +14,8 @@ const Todo = ({ title, completed, id, markCompleted }) => {
         style={{
           margin: "5px 0px 5px 0px",
           padding: "15px",
-          border: "1px solid rgb(128 128 128 / 34%)",
-          borderRadius: "10px",
+          borderBottom: " 1px solid rgba(128, 128, 128, 0.34)",
+          borderTop: " 1px solid rgba(128, 128, 128, 0.34)",
         }}
       >
         <h6>Title: {title}</h6>

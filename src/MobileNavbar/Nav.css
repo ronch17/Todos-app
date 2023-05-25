@@ -1,0 +1,16 @@
+.mobile_navbar {
+  position: fixed;
+  bottom: 0rem;
+  z-index: 1;
+  left: 50%;
+  width: max-content;
+  backdrop-filter: blur(15px);
+  transform: translateX(-50%);
+  padding: 1rem 3rem;
+}
+
+@media (min-width: 768px) {
+  .mobile_navbar {
+    display: none;
+  }
+}

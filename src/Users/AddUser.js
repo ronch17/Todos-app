@@ -2,9 +2,10 @@ import { Button, FormLabel, Input } from "@mui/material";
 import { useState } from "react";
 import Card from "../UI/Card";
 
-const AddUser = ({ userObj, addNewUser, cancel }) => {
+const AddUser = ({ userObj, addNewUser, cancelVal }) => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [cancel, setCancel] = useState(false);
 
   const handleName = (e) => {
     setName(e.target.value);
@@ -23,6 +24,11 @@ const AddUser = ({ userObj, addNewUser, cancel }) => {
     addNewUser(addedUser);
   };
 
+  const cancleForm = () => {
+    setCancel(!cancel);
+    cancelVal(cancel);
+  };
+
   return (
     <Card style={{ margin: "40px", padding: "50px" }}>
       <form onSubmit={handleSubmit}>
@@ -35,7 +41,7 @@ const AddUser = ({ userObj, addNewUser, cancel }) => {
         <Button type="submit" value="Submit">
           submit
         </Button>
-        <Button onClick={cancel}>Cancel</Button>
+        <Button onClick={cancleForm}>Cancel</Button>
       </form>
     </Card>
   );
